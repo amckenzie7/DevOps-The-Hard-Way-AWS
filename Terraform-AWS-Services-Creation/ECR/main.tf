@@ -22,4 +22,8 @@ resource "aws_ecr_repository" "devopsthehardway-ecr-repo" {
   image_scanning_configuration {
     scan_on_push = true
   }
+  tags = {
+    git_org  = "amckenzie7"
+    git_repo = "DevOps-The-Hard-Way-AWS"
+  }
 }

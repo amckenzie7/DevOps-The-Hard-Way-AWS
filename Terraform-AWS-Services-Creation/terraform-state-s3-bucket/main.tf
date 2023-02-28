@@ -15,4 +15,8 @@ resource "aws_s3_bucket" "terraform_state" {
       }
     }
   }
+  tags = {
+    git_org  = "amckenzie7"
+    git_repo = "DevOps-The-Hard-Way-AWS"
+  }
 }
