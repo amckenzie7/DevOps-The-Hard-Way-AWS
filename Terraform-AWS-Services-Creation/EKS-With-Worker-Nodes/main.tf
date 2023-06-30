@@ -33,6 +33,9 @@ resource "aws_iam_role" "eks-iam-role" {
 }
 EOF
 
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 ## Attach the IAM policy to the IAM role
@@ -47,7 +50,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-EK
 
 ## Create the EKS cluster
 resource "aws_eks_cluster" "devopsthehardway-eks" {
-  name = "devopsthehardway-cluster"
+  name     = "devopsthehardway-cluster"
   role_arn = aws_iam_role.eks-iam-role.arn
 
   vpc_config {
@@ -57,6 +60,9 @@ resource "aws_eks_cluster" "devopsthehardway-eks" {
   depends_on = [
     aws_iam_role.eks-iam-role,
   ]
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 ## Worker Nodes
@@ -73,6 +79,9 @@ resource "aws_iam_role" "workernodes" {
     }]
     Version = "2012-10-17"
   })
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
@@ -100,7 +109,7 @@ resource "aws_eks_node_group" "worker-node-group" {
   node_group_name = "devopsthehardway-workernodes"
   node_role_arn   = aws_iam_role.workernodes.arn
   subnet_ids      = [var.subnet_id_1, var.subnet_id_2]
-  instance_types = ["t3.xlarge"]
+  instance_types  = ["t3.xlarge"]
 
   scaling_config {
     desired_size = 1
@@ -113,4 +122,7 @@ resource "aws_eks_node_group" "worker-node-group" {
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     #aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
+  tags = {
+    user = "pchandaliya"
+  }
 }
