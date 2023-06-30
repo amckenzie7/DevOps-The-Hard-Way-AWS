@@ -22,4 +22,7 @@ resource "aws_ecr_repository" "devopsthehardway-ecr-repo" {
   image_scanning_configuration {
     scan_on_push = true
   }
+  tags = {
+    user = "pchandaliya"
+  }
 }
