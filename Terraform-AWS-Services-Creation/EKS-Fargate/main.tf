@@ -33,6 +33,9 @@ resource "aws_iam_role" "eks-iam-role" {
 }
 EOF
 
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 ## Attach the IAM policy to the IAM role
@@ -43,7 +46,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
 
 ## Create the EKS cluster
 resource "aws_eks_cluster" "devopsthehardway-eks" {
-  name = "devopsthehardway-cluster"
+  name     = "devopsthehardway-cluster"
   role_arn = aws_iam_role.eks-iam-role.arn
 
   vpc_config {
@@ -53,6 +56,9 @@ resource "aws_eks_cluster" "devopsthehardway-eks" {
   depends_on = [
     aws_iam_role.eks-iam-role,
   ]
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 
@@ -69,6 +75,9 @@ resource "aws_iam_role" "eks-fargate" {
     }]
     Version = "2012-10-17"
   })
+  tags = {
+    user = "pchandaliya"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSFargatePodExecutionRolePolicy" {
@@ -89,5 +98,8 @@ resource "aws_eks_fargate_profile" "devopsthehardway-eks-serverless" {
 
   selector {
     namespace = "default"
+  }
+  tags = {
+    user = "pchandaliya"
   }
 }
